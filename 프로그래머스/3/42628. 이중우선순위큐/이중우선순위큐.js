@@ -1,30 +1,57 @@
+class Heap {
+    constructor() {
+        this.heap = []
+    }
+    
+    getMin() {
+        return this.heap[0] ? this.heap[0] : null;
+    }
+    
+    getMax() {
+        return this.heap[0] ? this.heap[this.heap.length - 1] : null
+    }
+    
+    swap(a, b) {
+        [ this.heap[a], this.heap[b] ] = [ this.heap[b], this.heap[a] ]
+    }
+    
+    insert(value) {
+        this.heap.push(value);
+        
+        let currentIndex = this.heap.length - 1;
+        let leftIndex = currentIndex - 1;
+    
+        while (this.heap[leftIndex] > this.heap[currentIndex]) {
+            this.swap(leftIndex, currentIndex)
+            
+            currentIndex = leftIndex
+            leftIndex = currentIndex - 1
+        }
+    }
+    
+    pop() {
+        this.heap.pop();
+        
+    }
+    
+    shift() {
+        this.heap.shift();
+    }
+}
+
 function solution(operations) {
-    const result = [];
-    
-    const insertNumber = (num) => {
-        result.push(num)
-    }
-
-    const removeMaxNumber = () => {
-        const maxNumberIndex = result.indexOf(Math.max(...result));
-        result.splice(maxNumberIndex, 1)
-    }
-
-    const removeMinNumber = () => {
-        const maxNumberIndex = result.indexOf(Math.min(...result));
-        result.splice(maxNumberIndex, 1);
-    }
-    
-    operations.map(operation => {
+    const heap = new Heap();
+   
+    operations.forEach(operation => {
         if (operation.startsWith("I ")) {
-            insertNumber(Number(operation.replace('I ', '')));
-        } else if (operation.startsWith("D 1")) {
-            removeMaxNumber();
-        } else if (operation.startsWith("D -1")) {
-            removeMinNumber();
+            heap.insert(Number(operation.replace("I ", '')))
+        } else if (operation === "D 1") {
+            heap.pop();
+        } else if (operation === "D -1") {
+            heap.shift();
         }
     })
     
-    return result.length === 0 ? [0, 0] : [Math.max(...result), Math.min(...result)];
+    return heap.heap.length === 0 ? [0, 0] : [heap.getMax(), heap.getMin()]
 }
 
