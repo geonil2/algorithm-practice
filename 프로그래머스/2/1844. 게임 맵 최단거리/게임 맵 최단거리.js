@@ -26,7 +26,7 @@ function solution(maps) {
     }
     
     bfs(maps, 0, 0)
-    console.log(maps)
+    
     const count = maps[n - 1][m - 1];
     
     return count === 1 ? -1 : count;
