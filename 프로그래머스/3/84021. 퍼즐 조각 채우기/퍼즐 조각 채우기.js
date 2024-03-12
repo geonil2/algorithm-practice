@@ -19,7 +19,7 @@ function solution(game_board, table) {
             }
         }
     }
-    // console.log(blocks)
+    
     blocks.forEach(block => {
         for (let i = 0; i < emptyField.length; i++) {
           let match = false;
@@ -51,7 +51,7 @@ const direction = [
 
 function bfs(table, startX, startY, nodeValue, n) {
     const visited = Array.from(Array(n), () => Array(n).fill(false));
-
+    
     const queue = [];
     let block = [];
 
@@ -60,7 +60,7 @@ function bfs(table, startX, startY, nodeValue, n) {
 
     while (queue.length !== 0) {
         const [x, y] = queue.shift();
-
+        
         block.push([x, y]);
         table[x][y] = n;
 
@@ -73,7 +73,6 @@ function bfs(table, startX, startY, nodeValue, n) {
             if (!visited[nx][ny] && table[nx][ny] === nodeValue) {
                 visited[nx][ny] = true;
                 queue.push([nx, ny]);
-                table[nx][ny] = nodeValue;
             }
         }
     }
